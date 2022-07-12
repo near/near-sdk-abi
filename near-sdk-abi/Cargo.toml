@@ -1,0 +1,18 @@
+[package]
+name = "near-sdk-abi"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/near/near-sdk-abi"
+
+[dependencies]
+anyhow = "1.0"
+convert_case = "0.5"
+near-sdk = { git = "https://github.com/near/near-sdk-rs.git", rev = "9ab6df8ed35e67c247299059d8277c2170a0a91b", features = ["abi"] }
+prettyplease = "0.1"
+proc-macro2 = "1.0"
+schemafy_lib = { git = "https://github.com/near/schemafy", branch = "daniyar/expose-extra-api" }
+serde_json = "1.0"
+syn = "1.0"
+quote = "1.0"
