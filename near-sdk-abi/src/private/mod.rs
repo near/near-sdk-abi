@@ -10,7 +10,7 @@ pub fn generate_ext(
 ) -> proc_macro2::TokenStream {
     let schema_json = serde_json::to_string(&near_abi.abi.root_schema).unwrap();
 
-    let generator = Generator::builder().with_input_json(schema_json).build();
+    let generator = Generator::builder().with_input_json(&schema_json).build();
     let (mut token_stream, schema) = generator.generate_with_schema();
     let mut expander = Expander::new(None, "", &schema);
 
