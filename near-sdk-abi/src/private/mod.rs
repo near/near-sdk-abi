@@ -31,10 +31,9 @@ pub fn generate_ext(
             let args = m
                 .params
                 .iter()
-                .enumerate()
-                .map(|(i, a_param)| {
+                .map(|a_param| {
                     let a_type = expand_subschema(&mut expander, &a_param.type_schema);
-                    let a_name = format_ident!("arg{}", &i);
+                    let a_name = format_ident!("{}", &a_param.name);
                     quote! { #a_name: #a_type }
                 })
                 .collect::<Vec<_>>();
