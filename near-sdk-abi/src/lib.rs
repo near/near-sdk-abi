@@ -1,11 +1,11 @@
 use __private::{generate_ext, read_abi};
 use anyhow::{anyhow, Result};
 use convert_case::{Case, Casing};
-use quote::format_ident;
-use std::env;
+use quote::{format_ident, quote};
 use std::fs::File;
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::{env, fs};
 
 // Private functions shared between macro & generation APIs, not stable to be used.
 #[doc(hidden)]
@@ -24,6 +24,7 @@ impl Config {
                 .ok_or_else(|| anyhow!("OUT_DIR environment variable is not set"))
                 .map(|val| Into::into(val))
         })?;
+        fs::create_dir_all(&target)?;
 
         for (abi_path, name) in abis {
             let abi_path_no_ext = abi_path.as_ref().with_extension("");
@@ -52,6 +53,10 @@ impl Config {
                 })?;
 
             let token_stream = generate_ext(near_abi, contract_name);
+            let token_stream = quote! {
+                use serde::{Deserialize, Serialize};
+                #token_stream
+            };
             let syntax_tree = syn::parse_file(&token_stream.to_string()).unwrap();
             let formatted = prettyplease::unparse(&syntax_tree);
 
