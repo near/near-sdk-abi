@@ -66,7 +66,7 @@ impl Generator {
                 })
                 .ok_or_else(|| {
                     anyhow!(
-                        "ABI file '{}' does not contain a contract name. Please supply the name as the second tuple parameter.",
+                        "ABI file '{}' does not contain a contract name. Please supply the name via `file_with_name`.",
                         abi_path.display()
                     )
                 })?;
