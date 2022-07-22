@@ -14,27 +14,45 @@ pub mod __private;
 
 /// Configuration options for ABI code generation.
 #[derive(Default)]
-pub struct Config {
-    pub out_dir: Option<PathBuf>,
+pub struct Generator {
+    out_dir: Option<PathBuf>,
+    abis: Vec<(PathBuf, Option<String>)>,
 }
 
-impl Config {
-    pub fn generate_ext(&self, abis: &[(impl AsRef<Path>, Option<String>)]) -> Result<()> {
-        let target: PathBuf = self.out_dir.clone().map(Ok).unwrap_or_else(|| {
+impl Generator {
+    pub fn new(out_dir: PathBuf) -> Self {
+        Generator {
+            out_dir: Some(out_dir),
+            abis: vec![],
+        }
+    }
+
+    pub fn file(mut self, path: impl AsRef<Path>) -> Self {
+        self.abis.push((path.as_ref().into(), None));
+        self
+    }
+
+    pub fn file_with_name(mut self, path: impl AsRef<Path>, name: String) -> Self {
+        self.abis.push((path.as_ref().into(), Some(name)));
+        self
+    }
+
+    pub fn generate(self) -> Result<()> {
+        let target: PathBuf = self.out_dir.map(Ok).unwrap_or_else(|| {
             env::var_os("OUT_DIR")
                 .ok_or_else(|| anyhow!("OUT_DIR environment variable is not set"))
                 .map(Into::into)
         })?;
         fs::create_dir_all(&target)?;
 
-        for (abi_path, name) in abis {
-            let abi_path_no_ext = abi_path.as_ref().with_extension("");
-            let abi_filename = abi_path_no_ext.file_name().ok_or_else(|| {
-                anyhow!("{:?} is not a valid ABI path", &abi_path.as_ref().display())
-            })?;
+        for (abi_path, name) in self.abis {
+            let abi_path_no_ext = abi_path.with_extension("");
+            let abi_filename = abi_path_no_ext
+                .file_name()
+                .ok_or_else(|| anyhow!("{:?} is not a valid ABI path", abi_path.display()))?;
             let rust_path = target.join(abi_filename).with_extension("rs");
 
-            let near_abi = read_abi(abi_path);
+            let near_abi = read_abi(&abi_path);
 
             let contract_name = name
                 .as_ref()
@@ -49,7 +67,7 @@ impl Config {
                 .ok_or_else(|| {
                     anyhow!(
                         "ABI file '{}' does not contain a contract name. Please supply the name as the second tuple parameter.",
-                        abi_path.as_ref().display()
+                        abi_path.display()
                     )
                 })?;
 

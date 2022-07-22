@@ -1,9 +1,8 @@
-use near_sdk_abi::Config;
+use near_sdk_abi::Generator;
 
 fn main() -> anyhow::Result<()> {
-    let config = Config {
-        out_dir: Some("gen".into()),
-    };
-    config.generate_ext(&[("src/adder.json", None)])?;
+    Generator::new("gen".into())
+        .file("src/adder.json")
+        .generate()?;
     Ok(())
 }
