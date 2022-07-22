@@ -13,6 +13,7 @@ use std::{env, fs};
 pub mod __private;
 
 /// Configuration options for ABI code generation.
+#[derive(Default)]
 pub struct Config {
     pub out_dir: Option<PathBuf>,
 }
@@ -22,7 +23,7 @@ impl Config {
         let target: PathBuf = self.out_dir.clone().map(Ok).unwrap_or_else(|| {
             env::var_os("OUT_DIR")
                 .ok_or_else(|| anyhow!("OUT_DIR environment variable is not set"))
-                .map(|val| Into::into(val))
+                .map(Into::into)
         })?;
         fs::create_dir_all(&target)?;
 
@@ -65,11 +66,5 @@ impl Config {
         }
 
         Ok(())
-    }
-}
-
-impl Default for Config {
-    fn default() -> Config {
-        Config { out_dir: None }
     }
 }
