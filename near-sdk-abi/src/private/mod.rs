@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use near_sdk::__private::AbiRoot;
+use near_sdk::__private::{AbiRoot, AbiType};
 use quote::{format_ident, quote};
 use schemafy_lib::{Expander, Generator};
 
@@ -24,7 +24,14 @@ pub fn generate_ext(
                 .result
                 .clone()
                 .map(|r_param| {
-                    let r_type = expand_subschema(&mut expander, &r_param.type_schema);
+                    let r_type = match &r_param {
+                        AbiType::Json { type_schema } => {
+                            expand_subschema(&mut expander, type_schema)
+                        }
+                        AbiType::Borsh { type_schema: _ } => {
+                            panic!("Borsh is currently unsupported")
+                        }
+                    };
                     quote! { -> #r_type }
                 })
                 .unwrap_or_else(|| quote! {});
@@ -32,7 +39,14 @@ pub fn generate_ext(
                 .params
                 .iter()
                 .map(|a_param| {
-                    let a_type = expand_subschema(&mut expander, &a_param.type_schema);
+                    let a_type = match &a_param.typ {
+                        AbiType::Json { type_schema } => {
+                            expand_subschema(&mut expander, type_schema)
+                        }
+                        AbiType::Borsh { type_schema: _ } => {
+                            panic!("Borsh is currently unsupported")
+                        }
+                    };
                     let a_name = format_ident!("{}", &a_param.name);
                     quote! { #a_name: #a_type }
                 })
