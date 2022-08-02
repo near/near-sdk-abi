@@ -3,7 +3,7 @@ use near_sdk::near_bindgen;
 use near_sdk_abi_macros::near_abi_ext;
 use serde::{Deserialize, Serialize};
 
-near_abi_ext! { "src/adder.json" }
+near_abi_ext! { mod ext_adder trait Adder for "src/adder.json" }
 
 #[near_bindgen]
 #[derive(Default, BorshDeserialize, BorshSerialize)]
@@ -19,6 +19,6 @@ impl Delegator {
         b2: u32,
         adder_account_id: near_sdk::AccountId,
     ) -> near_sdk::Promise {
-        ext_abi::ext(adder_account_id).add(vec![a1.into(), a2.into()], vec![b1.into(), b2.into()])
+        ext_adder::ext(adder_account_id).add(vec![a1.into(), a2.into()], vec![b1.into(), b2.into()])
     }
 }

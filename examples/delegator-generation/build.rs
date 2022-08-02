@@ -1,8 +1,8 @@
-use near_sdk_abi::Generator;
+use near_sdk_abi::{AbiFile, Generator};
 
 fn main() -> anyhow::Result<()> {
     Generator::new("gen".into())
-        .file("src/adder.json")
+        .file(AbiFile::new("src/adder.json"))
         .generate()?;
     Ok(())
 }

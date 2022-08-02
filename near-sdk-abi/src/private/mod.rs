@@ -7,6 +7,7 @@ use schemafy_lib::{Expander, Generator};
 pub fn generate_ext(
     near_abi: AbiRoot,
     contract_name: proc_macro2::Ident,
+    mod_name: Option<proc_macro2::Ident>,
 ) -> proc_macro2::TokenStream {
     let schema_json = serde_json::to_string(&near_abi.abi.root_schema).unwrap();
 
@@ -55,8 +56,13 @@ pub fn generate_ext(
         })
         .collect::<Vec<_>>();
 
+    let ext_contract = mod_name.map_or_else(
+        || quote! { #[near_sdk::ext_contract] },
+        |n| quote! { #[near_sdk::ext_contract(#n)] },
+    );
+
     token_stream.extend(quote! {
-        #[near_sdk::ext_contract]
+        #ext_contract
         pub trait #contract_name {
             #(#methods)*
         }
