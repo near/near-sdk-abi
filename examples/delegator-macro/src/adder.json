@@ -1,5 +1,5 @@
 {
-  "abi_schema_version": "0.1.0",
+  "schema_version": "0.1.0",
   "metadata": {
     "name": "abi",
     "version": "0.1.0",
@@ -7,65 +7,33 @@
       "Near Inc <hello@nearprotocol.com>"
     ]
   },
-  "abi": {
+  "body": {
     "functions": [
       {
         "name": "add",
+        "doc": " Adds two pairs point-wise.",
         "is_view": true,
         "params": [
           {
             "name": "a",
+            "serialization_type": "json",
             "type_schema": {
               "$ref": "#/definitions/Pair"
-            },
-            "serialization_type": "json"
+            }
           },
           {
             "name": "b",
+            "serialization_type": "json",
             "type_schema": {
               "$ref": "#/definitions/Pair"
-            },
-            "serialization_type": "json"
+            }
           }
         ],
         "result": {
+          "serialization_type": "json",
           "type_schema": {
             "$ref": "#/definitions/Pair"
-          },
-          "serialization_type": "json"
-        }
-      },
-      {
-        "name": "add_callback",
-        "is_view": true,
-        "callbacks": [
-          {
-            "type_schema": {
-              "$ref": "#/definitions/DoublePair"
-            },
-            "serialization_type": "json"
-          },
-          {
-            "type_schema": {
-              "$ref": "#/definitions/DoublePair"
-            },
-            "serialization_type": "json"
           }
-        ],
-        "callbacks_vec": {
-          "type_schema": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/DoublePair"
-            }
-          },
-          "serialization_type": "json"
-        },
-        "result": {
-          "type_schema": {
-            "$ref": "#/definitions/DoublePair"
-          },
-          "serialization_type": "json"
         }
       }
     ],
@@ -74,21 +42,6 @@
       "title": "String",
       "type": "string",
       "definitions": {
-        "DoublePair": {
-          "type": "object",
-          "required": [
-            "first",
-            "second"
-          ],
-          "properties": {
-            "first": {
-              "$ref": "#/definitions/Pair"
-            },
-            "second": {
-              "$ref": "#/definitions/Pair"
-            }
-          }
-        },
         "Pair": {
           "type": "array",
           "items": [

@@ -9,10 +9,11 @@ repository = "https://github.com/near/near-sdk-abi"
 [dependencies]
 anyhow = "1.0"
 convert_case = "0.5"
-near-sdk = { version = "4.1.0-pre.0", features = ["abi"] }
+near-abi = "0.1.0-pre.0"
 prettyplease = "0.1"
 proc-macro2 = "1.0"
 schemafy_lib = { git = "https://github.com/near/schemafy", rev = "4fc8de1ef94f66db1f45889feebb9cf6b931dd94" }
+schemars = "0.8"
 serde_json = "1.0"
 syn = "1.0"
 quote = "1.0"

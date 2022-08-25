@@ -7,16 +7,14 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-near-sdk = { version = "4.1.0-pre.0", features = ["abi"] }
+near-sdk = { version = "4.1.0-pre.1", features = ["abi"] }
 near-sdk-abi = { path = "../../near-sdk-abi" }
 serde = "1.0"
 
 [dev-dependencies]
 anyhow = "1.0"
-near-sdk = { version = "4.1.0-pre.0", features = ["abi"] }
-serde_json = "1.0"
 tokio = { version = "1.14", features = ["full"] }
-workspaces = "0.3.1"
+workspaces = "0.4.1"
 
 [build-dependencies]
 anyhow = "1.0"
