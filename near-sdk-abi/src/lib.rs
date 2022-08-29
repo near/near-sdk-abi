@@ -98,6 +98,7 @@ impl Generator {
                 mod_name.map(|n| format_ident!("{}", n)),
             );
             let token_stream = quote! {
+                #![allow(unused_imports)]
                 use serde::{Deserialize, Serialize};
                 #token_stream
             };
