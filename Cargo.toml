@@ -2,5 +2,5 @@
 members = [
     "near-sdk-abi",
     "near-sdk-abi-macros",
+    "examples/*"
 ]
-exclude = ["examples/"]

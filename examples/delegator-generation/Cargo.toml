@@ -1,5 +1,5 @@
 [package]
-name = "delegator"
+name = "delegator-generation"
 version = "0.1.0"
 edition = "2021"
 
@@ -14,17 +14,8 @@ serde = "1.0"
 [dev-dependencies]
 anyhow = "1.0"
 tokio = { version = "1.14", features = ["full"] }
-workspaces = "0.4.1"
+workspaces = "0.7.0"
 
 [build-dependencies]
 anyhow = "1.0"
 near-sdk-abi = { path = "../../near-sdk-abi" }
-
-[profile.release]
-codegen-units = 1
-# Tell `rustc` to optimize for small code size.
-opt-level = "z"
-lto = true
-debug = false
-panic = "abort"
-overflow-checks = true

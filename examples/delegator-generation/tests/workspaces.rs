@@ -1,4 +1,3 @@
-use workspaces::prelude::*;
 use workspaces::{Contract, DevNetwork, Worker};
 
 async fn init(worker: &Worker<impl DevNetwork>) -> anyhow::Result<(Contract, Contract)> {
@@ -6,7 +5,7 @@ async fn init(worker: &Worker<impl DevNetwork>) -> anyhow::Result<(Contract, Con
         .dev_deploy(&include_bytes!("../res/adder.wasm").to_vec())
         .await?;
     let delegator = worker
-        .dev_deploy(&include_bytes!("../res/delegator.wasm").to_vec())
+        .dev_deploy(&include_bytes!("../res/delegator_generation.wasm").to_vec())
         .await?;
     Ok((adder, delegator))
 }
@@ -17,8 +16,8 @@ async fn test_delegate() -> anyhow::Result<()> {
     let (adder, delegator) = init(&worker).await?;
 
     let res = delegator
-        .call(&worker, "delegate")
-        .args_json((1u32, 2u32, 3u32, 4u32, adder.as_account().id()))?
+        .call("delegate")
+        .args_json((1u32, 2u32, 3u32, 4u32, adder.as_account().id()))
         .transact()
         .await?;
     assert_eq!(res.json::<(u32, u32)>()?, (4, 6));

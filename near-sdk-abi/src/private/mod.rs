@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use near_abi::{AbiRoot, AbiType};
+use near_abi::{AbiParameters, AbiRoot, AbiType};
 use quote::{format_ident, quote};
 use schemafy_lib::{Expander, Generator};
 
@@ -36,22 +36,17 @@ pub fn generate_ext(
                     quote! { -> #r_type }
                 })
                 .unwrap_or_else(|| quote! {});
-            let args = m
-                .params
-                .iter()
-                .map(|a_param| {
-                    let a_type = match &a_param.typ {
-                        AbiType::Json { type_schema } => {
-                            expand_subschema(&mut expander, type_schema)
-                        }
-                        AbiType::Borsh { type_schema: _ } => {
-                            panic!("Borsh is currently unsupported")
-                        }
-                    };
-                    let a_name = format_ident!("{}", &a_param.name);
-                    quote! { #a_name: #a_type }
-                })
-                .collect::<Vec<_>>();
+            let args = match &m.params {
+                AbiParameters::Json { args } => args
+                    .iter()
+                    .map(|arg| {
+                        let arg_type = expand_subschema(&mut expander, &arg.type_schema);
+                        let arg_name = format_ident!("{}", &arg.name);
+                        quote! { #arg_name: #arg_type }
+                    })
+                    .collect::<Vec<_>>(),
+                AbiParameters::Borsh { args: _ } => panic!("Borsh is currently unsupported"),
+            };
             quote! { fn #name(&self, #(#args),*) #result_type; }
         })
         .collect::<Vec<_>>();
