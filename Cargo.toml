@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "near-sdk-abi",
+    "near-sdk-abi-impl",
     "near-sdk-abi-macros",
     "examples/*"
 ]

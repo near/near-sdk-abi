@@ -1,16 +1,13 @@
-use __private::{generate_ext, read_abi};
 use anyhow::{anyhow, Result};
 use convert_case::{Case, Casing};
+use near_sdk_abi_impl::{generate_ext, read_abi};
 use quote::{format_ident, quote};
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
 use std::{env, fs};
 
-// Private functions shared between macro & generation APIs, not stable to be used.
-#[doc(hidden)]
-#[path = "private/mod.rs"]
-pub mod __private;
+pub use near_sdk_abi_macros::near_abi_ext;
 
 pub struct AbiFile {
     /// Path to the ABI JSON file.

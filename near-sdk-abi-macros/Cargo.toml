@@ -10,7 +10,8 @@ repository = "https://github.com/near/near-sdk-abi"
 proc-macro = true
 
 [dependencies]
-near-sdk-abi = { path = "../near-sdk-abi" }
 proc-macro2 = "1.0"
 syn = "1.0"
 quote = "1.0"
+
+near-sdk-abi-impl = { path = "../near-sdk-abi-impl" }
