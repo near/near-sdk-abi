@@ -1,0 +1,75 @@
+name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  msrv-check:
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+
+      - name: Get MSRV
+        run: |
+          RUST_MSRV="$(cat near-sdk-abi/Cargo.toml | sed -n 's/rust-version *= *"\(.*\)"/\1/p')"
+          echo "RUST_MSRV=$RUST_MSRV" >> $GITHUB_ENV
+
+      - name: "Install ${{ env.RUST_MSRV }} toolchain (MSRV)"
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ env.RUST_MSRV }}
+
+      - name: Cargo check
+        run: cargo check -p near-sdk-abi
+
+  tests:
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+
+      - name: Install `wasm32-unknown-unknown`
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Run tests
+        run: cargo test --workspace --verbose
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+
+      - name: Check Formatting
+        run: cargo fmt -p near-sdk-abi -p near-sdk-abi-macros -- --check
+
+      - name: Check Clippy
+        run: cargo clippy -p near-sdk-abi -p near-sdk-abi-macros --tests -- -Dclippy::all
+
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+
+      - name: Install Audit Tool
+        run: cargo install cargo-audit
+
+      - name: Run Audit Tool
+        run: cargo audit --ignore RUSTSEC-2020-0071
