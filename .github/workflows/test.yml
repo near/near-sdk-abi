@@ -56,10 +56,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Check Formatting
-        run: cargo fmt -p near-sdk-abi -p near-sdk-abi-macros -- --check
+        run: cargo fmt -p near-sdk-abi -p near-sdk-abi-macros -p near-sdk-abi-impl -- --check
 
       - name: Check Clippy
-        run: cargo clippy -p near-sdk-abi -p near-sdk-abi-macros --tests -- -Dclippy::all
+        run: cargo clippy -p near-sdk-abi -p near-sdk-abi-macros -p near-sdk-abi-impl --tests -- -Dclippy::all
 
   audit:
     runs-on: ubuntu-latest
