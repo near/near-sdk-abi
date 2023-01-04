@@ -7,9 +7,6 @@ readme = "README.md"
 repository = "https://github.com/near/near-sdk-abi"
 
 [dependencies]
-anyhow = "1.0"
-convert_case = "0.5"
-prettyplease = "0.1"
 proc-macro2 = "1.0"
 schemafy_lib = { git = "https://github.com/near/schemafy", rev = "4fc8de1ef94f66db1f45889feebb9cf6b931dd94" }
 schemars = "0.8"
