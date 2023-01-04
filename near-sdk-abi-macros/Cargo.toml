@@ -14,4 +14,4 @@ proc-macro2 = "1.0"
 syn = "1.0"
 quote = "1.0"
 
-near-sdk-abi-impl = { path = "../near-sdk-abi-impl" }
+near-sdk-abi-impl = { path = "../near-sdk-abi-impl", version = "0.1" }

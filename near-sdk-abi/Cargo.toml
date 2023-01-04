@@ -15,5 +15,5 @@ syn = "1.0"
 quote = "1.0"
 
 near-abi = "0.3.0"
-near-sdk-abi-impl = { path = "../near-sdk-abi-impl" }
-near-sdk-abi-macros = { path = "../near-sdk-abi-macros" }
+near-sdk-abi-impl = { path = "../near-sdk-abi-impl", version = "0.1" }
+near-sdk-abi-macros = { path = "../near-sdk-abi-macros", version = "0.1" }

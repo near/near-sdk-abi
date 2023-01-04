@@ -8,7 +8,7 @@ repository = "https://github.com/near/near-sdk-abi"
 
 [dependencies]
 proc-macro2 = "1.0"
-schemafy_lib = { git = "https://github.com/near/schemafy", rev = "4fc8de1ef94f66db1f45889feebb9cf6b931dd94" }
+near_schemafy_lib = "0.7"
 schemars = "0.8"
 serde_json = "1.0"
 syn = "1.0"
