@@ -1,6 +1,6 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::near_bindgen;
-use near_sdk_abi_macros::near_abi_ext;
+use near_sdk_abi::near_abi_ext;
 
 near_abi_ext! { mod ext_adder trait Adder for "src/adder.json" }
 

@@ -1,4 +1,4 @@
-use near_sdk_abi::__private::{generate_ext, read_abi};
+use near_sdk_abi_impl::{generate_ext, read_abi};
 use std::path::PathBuf;
 
 #[proc_macro]

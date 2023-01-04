@@ -1,8 +1,7 @@
-use std::path::{Path, PathBuf};
-
 use near_abi::{AbiParameters, AbiRoot, AbiType};
 use quote::{format_ident, quote};
 use schemafy_lib::{Expander, Generator};
+use std::path::{Path, PathBuf};
 
 pub fn generate_ext(
     near_abi: AbiRoot,
