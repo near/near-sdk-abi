@@ -5,6 +5,9 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/near/near-sdk-abi"
+description = """
+Utility library for making typesafe cross-contract calls in NEAR SDK smart contracts.
+"""
 
 [dependencies]
 proc-macro2 = "1.0"
