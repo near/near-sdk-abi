@@ -1,6 +1,6 @@
 use near_abi::{AbiParameters, AbiRoot, AbiType};
+use near_schemafy_lib::{Expander, Generator};
 use quote::{format_ident, quote};
-use schemafy_lib::{Expander, Generator};
 use std::path::{Path, PathBuf};
 
 pub fn generate_ext(
@@ -105,7 +105,7 @@ pub fn get_crate_root() -> std::io::Result<PathBuf> {
     Ok(current_dir)
 }
 
-fn schemars_schema_to_schemafy(schema: &schemars::schema::Schema) -> schemafy_lib::Schema {
+fn schemars_schema_to_schemafy(schema: &schemars::schema::Schema) -> near_schemafy_lib::Schema {
     let schema_json = serde_json::to_string(&schema).unwrap();
     serde_json::from_str(&schema_json).unwrap_or_else(|err| {
         panic!(
