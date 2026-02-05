@@ -5,3 +5,4 @@ members = [
     "near-sdk-abi-macros",
     "examples/*"
 ]
+resolver = "3"
