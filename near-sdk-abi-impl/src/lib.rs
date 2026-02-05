@@ -94,7 +94,6 @@ pub fn get_crate_root() -> std::io::Result<PathBuf> {
 
     for p in current_dir.ancestors() {
         if std::fs::read_dir(p)?
-            .into_iter()
             .filter_map(Result::ok)
             .any(|p| p.file_name().eq("Cargo.toml"))
         {

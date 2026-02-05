@@ -2,6 +2,7 @@
 name = "near-sdk-abi-impl"
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.86.0"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/near/near-sdk-abi"
@@ -12,9 +13,9 @@ Utility library for making typesafe cross-contract calls in NEAR SDK smart contr
 [dependencies]
 proc-macro2 = "1.0"
 near_schemafy_lib = "0.7"
-schemars = "0.8"
+schemars = "0.8.8"
 serde_json = "1.0"
 syn = "1.0"
 quote = "1.0"
 
-near-abi = "0.3.0"
+near-abi = "0.4.0"

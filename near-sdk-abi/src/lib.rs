@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use convert_case::{Case, Casing};
 use near_sdk_abi_impl::{generate_ext, read_abi};
 use quote::{format_ident, quote};

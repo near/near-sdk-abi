@@ -2,7 +2,9 @@
 members = [
     "near-sdk-abi",
     "near-sdk-abi-impl",
-    "near-sdk-abi-macros",
-    "examples/*"
+    "near-sdk-abi-macros"
 ]
 resolver = "3"
+
+[patch.crates-io]
+parity-secp256k1 = { git = "https://github.com/paritytech/rust-secp256k1", rev = "e84dd6bc611c3a9fa8ead4fc31fc6bfcf2b8b9ee" }
