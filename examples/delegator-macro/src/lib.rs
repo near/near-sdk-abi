@@ -1,4 +1,4 @@
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
 use near_sdk::near_bindgen;
 use near_sdk_abi::near_abi_ext;
 
@@ -6,6 +6,7 @@ near_abi_ext! { mod ext_adder trait Adder for "src/adder.json" }
 
 #[near_bindgen]
 #[derive(Default, BorshDeserialize, BorshSerialize)]
+#[borsh(crate = "near_sdk::borsh")]
 pub struct Delegator {}
 
 #[near_bindgen]
