@@ -1,18 +1,18 @@
-use workspaces::{Contract, DevNetwork, Worker};
+use near_workspaces::{Contract, DevNetwork, Worker};
 
 async fn init(worker: &Worker<impl DevNetwork>) -> anyhow::Result<(Contract, Contract)> {
     let adder = worker
-        .dev_deploy(&include_bytes!("../res/adder.wasm").to_vec())
+        .dev_deploy(include_bytes!("../res/adder.wasm"))
         .await?;
     let delegator = worker
-        .dev_deploy(&include_bytes!("../res/delegator_macro.wasm").to_vec())
+        .dev_deploy(include_bytes!("../res/delegator_macro.wasm"))
         .await?;
     Ok((adder, delegator))
 }
 
 #[tokio::test]
 async fn test_delegate() -> anyhow::Result<()> {
-    let worker = workspaces::sandbox().await?;
+    let worker = near_workspaces::sandbox().await?;
     let (adder, delegator) = init(&worker).await?;
 
     let res = delegator

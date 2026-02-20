@@ -1,17 +1,19 @@
 [package]
 name = "delegator-macro"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+rust-version = "1.86.0"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-near-sdk = { version = "4.1.0", features = ["abi"] }
+near-sdk = { version = "5.24.0", features = ["abi"] }
 near-sdk-abi = { path = "../../near-sdk-abi" }
 serde = "1.0"
 
 [dev-dependencies]
 anyhow = "1.0"
 tokio = { version = "1.14", features = ["full"] }
-workspaces = "0.7.0"
+near-workspaces = "0.22.0"
+near-sdk = { version = "5.24.0", features = ["abi", "unit-testing"] }

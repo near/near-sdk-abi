@@ -68,8 +68,13 @@ jobs:
       - name: Checkout Sources
         uses: actions/checkout@v2
 
+      - name: Install Rust stable
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup override set stable
+
       - name: Install Audit Tool
         run: cargo install cargo-audit
 
       - name: Run Audit Tool
-        run: cargo audit --ignore RUSTSEC-2020-0071
+        run: cargo audit
